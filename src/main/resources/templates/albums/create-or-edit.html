@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <th:block th:replace=" home :: head"></th:block>
+  </head>
+  <body>
+    <header th:insert="home :: navbar" />
+    <main>
+      <section class="container">
+        <div>
+          <h1 th:unless="${edit}">Aggiungi un nuovo album</h1>
+          <h1 th:if="${edit}">Modifica "[[${album.name}]]"</h1>
+          <div class="row">
+            <div class="col-12">
+              <form
+                th:object="${album}"
+                th:action="${edit} ? @{/albums/edit/{id}(id=*{id})} : @{/albums/create}"
+                method="POST"
+              >
+                <!-- ALBUM NAME -->
+                <label class="form-label" for="name">Nome album</label>
+                <input
+                  class="form-control mb-3"
+                  type="text"
+                  id="name"
+                  th:field="*{name}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('name')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('name')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- MAIN ARTIST -->
+                <label class="form-label" for="artist"
+                  >Artista principale</label
+                >
+                <input
+                  class="form-control mb-3"
+                  type="text"
+                  id="artist"
+                  th:field="*{mainArtist}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('mainArtist')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('mainArtist')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <label class="form-label" for="description">Descrizione</label>
+                <textarea
+                  class="form-control mb-3"
+                  id="description"
+                  th:field="*{description}"
+                  required
+                  th:errorClass="is-invalid"
+                ></textarea>
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('description')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('description')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- IMG -->
+                <label class="form-label" for="img"
+                  >Immagine di copertina(Il formato é 640x640)</label
+                >
+                <input
+                  class="form-control mb-3"
+                  type="url"
+                  id="img"
+                  th:field="*{img}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('img')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('img')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- RELEASE DATE -->
+                <label class="form-label" for="releaseDate"
+                  >Data di uscita</label
+                >
+                <input
+                  class="form-control mb-3"
+                  type="date"
+                  id="releaseDate"
+                  th:field="*{releaseDate}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('releaseDate')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('releaseDate')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+                <!-- GENERI -->
+                <div class="row g-0 mb-3">
+                  <label class="form-label">Generi</label>
+                  <div class="form-check col-4" th:each="genre : ${genres}">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      th:id="|genre_${genre.id}|"
+                      th:field="*{albumGenres}"
+                      th:value="${genre.id}"
+                    />
+                    <label
+                      class="form-check-label"
+                      th:for="|genre_${genre.id}|"
+                      th:text="${genre.name}"
+                    ></label>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between my-3">
+                  <div>
+                    <a
+                      th:href="@{/albums/{id}(id=${album.id})}"
+                      class="btn btn-secondary"
+                      >Annulla</a
+                    >
+                    <button class="btn btn-warning" type="reset">
+                      Cancella modifiche
+                    </button>
+                  </div>
+
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    th:text="${edit} ? Aggiorna : Salva"
+                  ></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div th:replace="home :: bs-script"></div>
+  </body>
+</html>

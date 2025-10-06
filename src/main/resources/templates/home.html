@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <th:block th:fragment="head">
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+        rel="stylesheet"
+        th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}"
+      />
+      <link
+        rel="stylesheet"
+        th:href="@{/webjars/font-awesome/7.0.0/css/all.min.css}"
+      />
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
+      <title>Spoolify</title>
+    </th:block>
+  </head>
+  <body>
+    <header>
+      <th:block th:fragment="navbar">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/albums}">
+              <h2>Spoolify</h2>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item btn">
+                  <a th:href="@{/}" aria-current="page" class="nav-link">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item btn">
+                  <a class="nav-link" aria-current="page" th:href="@{/albums}"
+                    >Album</a
+                  >
+                </li>
+                <li class="nav-item btn">
+                  <a class="nav-link" aria-current="page" th:href="@{/songs}"
+                    >Canzoni</a
+                  >
+                </li>
+                <li class="nav-item btn">
+                  <a class="nav-link" aria-current="page" th:href="@{/genres}"
+                    >Generi</a
+                  >
+                </li>
+              </ul>
+              <div class="mx-2">
+                <span sec:authentication="name"></span>
+                <span sec:authentication="principal.authorities"></span>
+              </div>
+              <div>
+                <a class="btn btn-sm btn-primary" href="/logout">Log Out</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </th:block>
+    </header>
+    <main>
+      <!-- DA SISTEMARE -->
+
+      <section class="container">
+        <h1 class="text-center">Benvenuto nella home!</h1>
+        <h3>In che sezione vuoi andare?</h3>
+        <div class="row">
+          <div class="col-4">
+            <a class="btn btn-primary" th:href="@{/albums}">Album</a>
+          </div>
+          <div class="col-4">
+            <a class="btn btn-secondary" th:href="@{/songs}">Canzoni</a>
+          </div>
+          <div class="col-4">
+            <a class="btn btn-tertiary" th:href="@{/genres}">Generi</a>
+          </div>
+        </div>
+        <!-- <table class="table">
+
+        </table> -->
+      </section>
+    </main>
+    <th:block th:fragment="bs-script">
+      <script
+        th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"
+      ></script
+    ></th:block>
+  </body>
+</html>

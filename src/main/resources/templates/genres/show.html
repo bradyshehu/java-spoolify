@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <th:block th:replace="home::head"></th:block>
+  </head>
+  <body>
+    <header th:insert="home::navbar"></header>
+    <div class="container">
+      <section
+        class="page-head my-4 d-flex justify-content-between align-items-center"
+      >
+        <h2>Dettagli di [[${genre.name}]]</h2>
+        <div>
+          <a
+            sec:authorize="hasAuthority('ADMIN')"
+            class="btn btn-sm btn-primary"
+            th:href="@{edit/{id}(id = ${genre.id})}"
+            >Modifica [[${genre.name}]]</a
+          >
+        </div>
+      </section>
+      <section class="page-body py-4" th:object="${genre}">
+        <p>
+          <strong>Nome:</strong>
+          <span th:text="*{name}"></span>
+        </p>
+        <p>
+          <strong>Descrizione:</strong>
+          <span th:text="*{description}"></span>
+        </p>
+        <strong>Album:</strong>
+        <ul>
+          <li th:each="album : *{albums}">
+            <a
+              th:href="@{/albums/{id}(id=${album.id})}"
+              th:text="${album.name}"
+              class="link-black"
+            ></a>
+          </li>
+        </ul>
+
+        <strong>Canzoni:</strong>
+        <ul>
+          <li th:each="song : *{songs}">
+            <a
+              th:href="@{/songs/{id}(id=${song.id})}"
+              th:text="${song.name}"
+              class="link-black"
+            ></a>
+          </li>
+        </ul>
+        <button class="btn btn-secondary" onclick="history.back()">
+          Torna indietro
+        </button>
+      </section>
+    </div>
+  </body>
+</html>

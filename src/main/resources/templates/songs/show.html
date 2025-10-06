@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <th:block th:replace=" home :: head"></th:block>
+  </head>
+  <body>
+    <header th:insert="home :: navbar"></header>
+    <div class="container">
+      <section
+        class="page-head my-4 d-flex justify-content-between align-items-center"
+      >
+        <h2>Dettagli di [[${song.name}]]</h2>
+        <div>
+          <a
+            sec:authorize="hasAuthority('ADMIN')"
+            class="btn btn-sm btn-primary"
+            th:href="@{edit/{id}(id = ${song.id})}"
+            >Modifica [[${song.name}]]</a
+          >
+        </div>
+      </section>
+      <section class="page-body py-4" th:object="${song}">
+        <p>
+          <strong>Nome:</strong>
+          <span th:text="*{name}"></span>
+        </p>
+        <p>
+          <strong>Durata:</strong>
+          <span th:text="*{duration}"></span>
+        </p>
+        <p>
+          <strong>Testo esplicito:</strong>
+          <span th:if="*{isExplicit}">Sí</span>
+          <span th:unless="*{isExplicit}">No</span>
+        </p>
+        <p>
+          <strong>Album:</strong>
+          <a
+            th:href="@{/albums/{id}(id=*{album.id})}"
+            th:text="*{album.name}"
+            class="link-black"
+          ></a>
+        </p>
+        <h5>Generi:</h5>
+        <ul th:if="*{songGenres.size() > 0}">
+          <li th:each="genre : *{songGenres}">
+            <span th:text="${genre.name}"></span>
+          </li>
+        </ul>
+        <p th:unless="*{songGenres.size() > 0}">
+          Non ci sono generi per questa canzone.
+        </p>
+        <button class="btn btn-secondary" onclick="history.back()">
+          Torna indietro
+        </button>
+      </section>
+    </div>
+  </body>
+</html>

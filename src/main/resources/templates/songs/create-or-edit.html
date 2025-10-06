@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <th:block th:replace=" home :: head"></th:block>
+  </head>
+  <body>
+    <header th:insert="home :: navbar" />
+    <main>
+      <section class="container">
+        <div>
+          <h1 th:unless="${edit}">Aggiungi una nuova canzone</h1>
+          <h1 th:if="${edit}">Modifica "[[${song.name}]]"</h1>
+          <div class="row">
+            <div class="col-12">
+              <form
+                th:object="${song}"
+                th:action="${edit} ? @{/songs/edit/{id}(id=*{id})} : @{/songs/create}"
+                method="POST"
+              >
+                <input type="hidden" th:field="*{album.id}" />
+                <!-- SONG NAME -->
+                <label class="form-label" for="name">Nome canzone</label>
+                <input
+                  class="form-control mb-3"
+                  type="text"
+                  id="name"
+                  th:field="*{name}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('name')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('name')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- DURATION -->
+                <label class="form-label" for="duration">Durata</label>
+                <input
+                  class="form-control mb-3"
+                  type="number"
+                  min="0"
+                  step="any"
+                  id="duration"
+                  th:field="*{duration}"
+                  required
+                  th:errorClass="is-invalid"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('duration')}"
+                >
+                  <ul>
+                    <li
+                      th:each="error : ${#fields.errors('duration')}"
+                      th:text="${error}"
+                    ></li>
+                  </ul>
+                </div>
+
+                <!-- EXPLICIT -->
+
+                <div class="form-check form-switch mb-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="isExplicit"
+                    th:field="*{isExplicit}"
+                  />
+                  <label class="form-check-label" for="isExplicit">
+                    Contenuto esplicito
+                  </label>
+                </div>
+
+                <!-- GENERI -->
+                <div class="row g-0 mb-3">
+                  <label class="form-label">Generi</label>
+                  <div class="form-check col-4" th:each="genre : ${genres}">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      th:id="|genre_${genre.id}|"
+                      th:field="*{songGenres}"
+                      th:value="${genre.id}"
+                    />
+                    <label
+                      class="form-check-label"
+                      th:for="|genre_${genre.id}|"
+                      th:text="${genre.name}"
+                    ></label>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between my-3">
+                  <div>
+                    <a
+                      th:href="@{/albums/{id}(id=*{album.id})}"
+                      class="btn btn-secondary"
+                      >Annulla</a
+                    >
+                    <button class="btn btn-warning" type="reset">
+                      Cancella modifiche
+                    </button>
+                  </div>
+
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    th:text="${edit} ? Aggiorna : Salva"
+                  ></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div th:replace="home :: bs-script"></div>
+  </body>
+</html>

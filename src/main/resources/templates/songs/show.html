@@ -44,7 +44,11 @@
         <h5>Generi:</h5>
         <ul th:if="*{songGenres.size() > 0}">
           <li th:each="genre : *{songGenres}">
-            <span th:text="${genre.name}"></span>
+            <a
+              class="link-black"
+              th:href="@{/genres/{id}(id = ${genre.id})}"
+              th:text="${genre.name}"
+            ></a>
           </li>
         </ul>
         <p th:unless="*{songGenres.size() > 0}">

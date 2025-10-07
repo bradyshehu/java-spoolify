@@ -32,6 +32,7 @@ public class SecurityConfiguration {
             .requestMatchers("/genres/create", "/genres/edit/**").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.POST, "/genres/**").hasAuthority("ADMIN") // POST METHODS PER GENRE(DELETE)
             .requestMatchers("/", "/home", "/albums", "/albums/**", "/songs", "/songs/**", "/genres", "/genres/**").hasAnyAuthority("USER", "ADMIN")
+            .requestMatchers("/api/**").permitAll()
             .anyRequest().authenticated()
             )
             .formLogin(
@@ -46,7 +47,9 @@ public class SecurityConfiguration {
             .invalidateHttpSession(true)            
             .clearAuthentication(true)        
             .permitAll()             
-            );
+            )
+            .cors(cors -> cors.disable())
+            .csrf(csrf -> csrf.disable());;
 
             return http.build();
     }

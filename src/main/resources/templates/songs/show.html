@@ -50,9 +50,12 @@
         <p th:unless="*{songGenres.size() > 0}">
           Non ci sono generi per questa canzone.
         </p>
-        <button class="btn btn-secondary" onclick="history.back()">
-          Torna indietro
-        </button>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-secondary" onclick="history.back()">
+            Torna indietro
+          </button>
+          <a class="btn btn-primary" th:href="@{/songs}"> Vai alle Canzoni </a>
+        </div>
       </section>
     </div>
   </body>

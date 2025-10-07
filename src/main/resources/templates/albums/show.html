@@ -41,7 +41,11 @@
                     <h5>Generi:</h5>
                     <ul th:if="*{albumGenres.size() > 0}">
                       <li th:each="genre : *{albumGenres}">
-                        <span th:text="${genre.name}"></span>
+                        <a
+                          class="link-black"
+                          th:href="@{/genres/{id}(id=${genre.id})}"
+                          th:text="${genre.name}"
+                        ></a>
                       </li>
                     </ul>
                     <p th:unless="*{albumGenres.size() > 0}">
@@ -84,7 +88,13 @@
                         th:object="${song}"
                       >
                         <td th:text="${iterStat.count}"></td>
-                        <td th:text="*{name}"></td>
+                        <td>
+                          <a
+                            class="link-black"
+                            th:href="@{/songs/{id}(id=*{id})}"
+                            th:text="*{name}"
+                          ></a>
+                        </td>
                         <td th:text="*{duration}"></td>
                         <td>
                           <span th:if="*{isExplicit}">Sí</span>
@@ -138,6 +148,7 @@
             >Torna a tutti gli album</a
           >
           <a
+            sec:authorize="hasAuthority('ADMIN')"
             class="btn btn-primary"
             th:href="@{/albums/edit/{id}(id=${album.id})}"
             >Modifica [[${album.name}]]</a

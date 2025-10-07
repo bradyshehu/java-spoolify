@@ -8,6 +8,8 @@ import org.lessons.spoolify.java.java_spoolify.models.Song;
 import org.lessons.spoolify.java.java_spoolify.repositories.AlbumRepository;
 import org.lessons.spoolify.java.java_spoolify.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,17 @@ public class AlbumService {
     }
     public List<Album> findByGenreId(Integer genreId){
         return albumRepo.findByAlbumGenres_Id(genreId);
+    }
+    // INDEX PAGINATE
+    public Page<Album> findAllPaged(Pageable pageable) {
+        return albumRepo.findAll(pageable);
+    }
+    public Page<Album> findFilteredByNamePaged(String name, Pageable pageable) {
+        return albumRepo.findByNameContainingIgnoreCase(name, pageable);
+    }
+
+    public Page<Album> findByGenreIdPaged(Integer genreId, Pageable pageable) {
+        return albumRepo.findByAlbumGenres_Id(genreId, pageable);
     }
     // SHOW
     public Optional<Album> findById(Integer id){

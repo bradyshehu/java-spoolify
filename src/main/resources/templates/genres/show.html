@@ -49,9 +49,12 @@
             ></a>
           </li>
         </ul>
-        <button class="btn btn-secondary" onclick="history.back()">
-          Torna indietro
-        </button>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-secondary" onclick="history.back()">
+            Torna indietro
+          </button>
+          <a class="btn btn-primary" th:href="@{/genres}"> Vai ai Generi </a>
+        </div>
       </section>
     </div>
   </body>

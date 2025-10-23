@@ -28,7 +28,7 @@ public class Song {
     private Integer id;
 
     @NotBlank(message = "This field must be filled")
-    @Size(max = 50)
+    @Size(max = 75)
     private String name;
 
     @NotNull(message = "This field must be filled")

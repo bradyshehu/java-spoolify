@@ -27,7 +27,7 @@ public class Album {
     private Integer id;
 
     @NotBlank(message = "This field must be filled")
-    @Size(max = 50)
+    @Size(max = 75)
     private String name;
 
     @NotBlank(message = "This field must be filled")
@@ -122,12 +122,19 @@ public class Album {
 
     // METODO getTotalDuration PER CALCOLARE DURATA ALBUM IN BASE A DURATA CANZONI
     public BigDecimal getTotalDuration(){
-        BigDecimal totalDuration = BigDecimal.ZERO;
+        // BigDecimal totalDuration = BigDecimal.ZERO;
+        int totalSeconds = 0;
         for (Song song : this.songs){
-            totalDuration = totalDuration.add(song.getDuration());
+            BigDecimal duration = song.getDuration();
+            int minutes = duration.intValue();
+            int seconds = duration.subtract(new BigDecimal(minutes)).multiply(new BigDecimal(100)).intValue();
+            totalSeconds += minutes * 60 + seconds;
         }
-        return totalDuration;
+        int minutiTotali = totalSeconds / 60;
+        int secondiTotali = totalSeconds % 60;
+        return new BigDecimal(String.format("%d.%02d", minutiTotali, secondiTotali));
     }
+
     // METODO getTotalTracks PER CALCOLARE NUMERO DI CANZONI IN BASE A LUNGHEZZA DI songs(o getSongs in un mapping)
     public Integer getTotalTracks(){
         return this.songs.size();

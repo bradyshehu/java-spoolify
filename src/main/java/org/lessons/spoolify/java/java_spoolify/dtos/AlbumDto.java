@@ -53,10 +53,10 @@ public class AlbumDto {
         this.description = description;
     }
 
-    public String getImg() {
-        return img;
-    }
-
+public String getImg() {
+    if (img.startsWith("http")) return img;
+    return "http://localhost:8080/img/" + img;
+}
     public void setImg(String img) {
         this.img = img;
     }

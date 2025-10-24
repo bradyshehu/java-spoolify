@@ -12,7 +12,7 @@
             <div class="card" th:object="${album}">
               <div class="row g-0">
                 <div class="col-6">
-                  <img th:src="*{img}" th:alt="*{name}" />
+                  <img th:src="@{/img/{img}(img=*{img})}" th:alt="*{name}" />
                 </div>
                 <div class="card-head col-6 p-3">
                   <h4 th:text="*{name}"></h4>

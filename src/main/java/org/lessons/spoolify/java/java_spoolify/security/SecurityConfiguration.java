@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     @Autowired
-    DBUserDetailsService userdetailsService;
+    DBUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -64,7 +64,7 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider authProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setPasswordEncoder(pwEncoder());
-        authProvider.setUserDetailsService(userdetailsService);
+        authProvider.setUserDetailsService(userDetailsService);
         return authProvider;
     }
     
